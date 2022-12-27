@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://nix_spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://Fighter.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15, 30 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12, 12 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 28, 30 )
+
+[node name="Fighter" type="KinematicBody2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Body Collider" type="CollisionShape2D" parent="."]
+position = Vector2( -85, 0 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -85, 0 )
+texture = ExtResource( 1 )
+hframes = 38
+frame = 8
+
+[node name="blast_spawn" type="Position2D" parent="Sprite"]
+position = Vector2( 85, 0 )
+
+[node name="HitCol" type="Area2D" parent="Sprite" groups=[
+"attacks",
+]]
+collision_layer = 4
+collision_mask = 2
+
+[node name="HitCollider" type="CollisionShape2D" parent="Sprite/HitCol" groups=[
+"attacks",
+]]
+shape = SubResource( 2 )
+disabled = true
+
+[node name="HitBox" type="Area2D" parent="Sprite" groups=[
+"hitboxes",
+]]
+position = Vector2( 85, 0 )
+collision_layer = 2
+collision_mask = 4
+
+[node name="HitBoxCol" type="CollisionShape2D" parent="Sprite/HitBox" groups=[
+"hitboxes",
+]]
+position = Vector2( -90, 0 )
+shape = SubResource( 3 )
+
+[node name="InRangeCollider" type="Area2D" parent="Sprite"]
+collision_layer = 8
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/InRangeCollider"]
+
+[node name="Shadow" type="Sprite" parent="."]
+[connection signal="area_entered" from="Sprite/HitBox" to="." method="_on_HitBox_area_entered"]
