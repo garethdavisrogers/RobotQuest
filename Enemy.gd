@@ -1,102 +1,116 @@
 extends "res://Fighter.gd"
 
-var in_melee_attack_range = false
-var target_position = null
-var player_detected = false
 onready var detector = $Detector
-onready var in_range_collider = $Sprite/InRangeCollider
+onready var in_range_collider = $Sprite/InRangeCol
+
+var target_position = null
+var target_direction = null
+var target_distance = null
+var target_details = {
+	'target_position':null,
+	'target_direction':null,
+	'target_distance':null
+	}
+var in_melee_attack_range = false
+var player_detected = false
+
 ##player_detected is based on enter/exit $Detector signals
-func _ready():
-	##handicaps will slow down the enemy reactions to taste
-	handicap['lite'] = 0.5
-	handicap['heavy'] = 0.8
-	handicap['combo_time'] = 0.5
 	
 func _physics_process(delta):
-	clamp_movement()
-	if(health > 0):
+	increment_timers(delta)
 	##timers always tick if greater than 0
-		increment_timers(delta)
-		##enemy can only function if not staggered
-		if(timers['stun_timer'] < 0):
-			knockdir = null
-			if(player_detected and in_melee_attack_range):
-				if(timers['cool_down'] < 0):
-					anim_switch(str('lite_attack', current_attack_index))
-					attack_input_pressed()
-			elif(player_detected):
-				state_machine('seek')
-			else:
-				state_machine('idle')
-				in_melee_attack_range = false
-				player_detected = false
-				
-			match state:
-				'attack':
-					state_attack()
-				'seek':
-					state_seek()
-				'idle':
-					state_idle()
-				'stagger':
-					state_stagger()
-				'defend':
-					state_defend()
+	clamp_movement()
+	##idle until player detected
+	if(health > 0):
+		init_movement()
 		movement_loop()
 		spritedir_loop()
+		if(player_detected):
+			get_player_info()
+			##enemy can only function if not staggered
+			##seek target
+			if(timers['stun_timer'] < 0):
+				knockdir = null
+				if(timers['cool_down'] < 0):
+					if(in_melee_attack_range):
+						anim_switch(str('lite_attack', current_attack_index))
+						attack_input_pressed()
+					else:
+						current_attack_index = 1
+						state_machine('seek')
+		else:
+			current_attack_index = 1
+			movedir = Vector2(0,0)
+			state_machine('idle')
 	else:
-		anim_switch('die')
+		anim_switch('idle')
+		
+	match state:
+			'attack':
+				state_attack()
+			'seek':
+				state_seek()
+			'idle':
+				state_idle()
+			'stagger':
+				state_stagger()
+			'defend':
+				state_defend()
+			'grapple':
+				state_grapple()
+			'charge':
+				state_charge()
+			'clinched':
+				state_clinched()
+			'wind_up':
+				state_windup()
+			'die':
+				state_die()
 	
 func state_seek():
-	current_attack_index = 1
-	var t = get_player_position()
 	##if no player is in detect radius, change to idle state
-	if(t != null):
-		close_distance(t)
-	else:
-		player_detected = false
-	
-func get_player_position():
-	var players = get_tree().get_nodes_in_group('players')
-	if(not players):
-		return null
-	var player_position = players[0].global_position
-	return player_position
-
-func close_distance(player_pos):
-	movedir = get_position().direction_to(player_pos)
-	if(speed == 0):
-			speed += 1
-	else:
-		speed = accelerate(speed)
-	spritedir_loop()
+	current_attack_index = 1
+	speed = accelerate(speed)
 	anim_switch('walk')
+	movedir = target_direction
+
+func get_player_info():
+	var entities = detector.get_overlapping_bodies()
+	for entity in entities:
+		if(entity.is_in_group('players') and entity.is_in_group('entities')):
+			var sprite_pos = entity.get_node('Sprite')
+			target_position = sprite_pos.global_position
+			target_details['target_position'] = sprite_pos.global_position
+			target_direction = global_position.direction_to(target_position)
+			target_details['target_direction'] = global_position.direction_to(target_position)
+			target_distance = global_position.distance_to(target_position)
+			target_details['target_distance'] = global_position.distance_to(target_position)
 	
 func _on_Detector_body_entered(body):
 	if(body.is_in_group('players')):
 		player_detected = true
 
-
 func _on_Detector_body_exited(_body):
 	var bodies = detector.get_overlapping_bodies()
 	for b in bodies:
 		if(b.is_in_group('players')):
-			return
+			player_detected = true
 	player_detected = false
 
+func _on_GrappleCollider_area_entered(area):
+	if(area.is_in_group('players')):
+		state_machine('grapple')
 
-func _on_InRangeCollider_body_entered(body):
+func _on_InRangeCol_body_entered(body):
 	if(body.is_in_group('players')):
 		in_melee_attack_range = true
 
-
-func _on_InRangeCollider_body_exited(body):
-	var bodies = in_range_collider.get_overlapping_bodies()
-	for b in bodies:
-		if(b != body and b.is_in_group('players')):
-			return
+func _on_InRangeCol_body_exited(_body):
+	var bodies = in_range_col.get_overlapping_bodies()
+	for body in bodies:
+		if(body.is_in_group('player')):
+			in_melee_attack_range = true
 	in_melee_attack_range = false
-
 
 func _on_anim_animation_finished(anim_name):
 	if(anim_name=='die'):

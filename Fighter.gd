@@ -5,9 +5,13 @@ onready var sprite = $Sprite
 onready var blast_spawn = $Sprite/blast_spawn
 onready var hitcol = $Sprite/HitCol
 onready var hitbox = $Sprite/HitBox
+onready var in_range_col = $Sprite/InRangeCol
 onready var anim = $anim
 onready var shadow = $Shadow
 
+##clamp
+var x_limit = 0
+var y_limit = 0
 ##respective fighter attributes
 export(int) var max_speed = 200
 export(int) var max_health = 10
@@ -15,6 +19,7 @@ export(int) var max_combo_index = 1
 export(float) var acceleration_constant = 0.1
 
 ##universal fighter attributes
+var type = 'enemies'
 var health = 10
 var default_shadow_diff = 45
 const time_till_next_input = 0.5
@@ -25,59 +30,60 @@ var max_jump = 300
 var movedir = Vector2(0, 0)
 var knockdir = null
 var lastdirection = movedir
-var gravity = Vector2(0, 0)
 var is_in_combo = false
 var current_attack_index = 1
+var can_attack_ground = false
 ##timers
 var timers = {
 	'cool_down': -1, 
 	'jump_timer': -1, 
 	'stun_timer': -1, 
-	'combo_timer': -1
+	'combo_timer': -1,
+	'charge_timer': -1,
+	'wind_up': -1
 	}
-##cooldown handicap
-var handicap = {
-	'lite': 0,
-	'heavy': 0,
-	'combo_time': 0
-}
 ##METHODS
 func _ready():
 	##distance between sprite and shadow for jumping etc
+	x_limit = get_owner().get_node('Sprite').texture.get_width()
+	y_limit = get_owner().get_node('Sprite').texture.get_height()
 	default_shadow_diff = get_shadow_diff()
 	health = max_health
 	
 ##controls displacement
 func movement_loop():
 	var motion
-	var knockback = 400
+	var knockback = 350
 	if(knockdir != null):
 		motion = knockdir.normalized() * knockback
 	elif(movedir == Vector2(0, 0) and (speed > 0)):
 		motion = lastdirection * speed
 	else:
 		motion = movedir.normalized() * speed
+		lastdirection = movedir
 # warning-ignore:return_value_discarded
-	move_and_slide(motion, gravity)
+	move_and_slide(motion, Vector2(0,0))
 
 ##matches the sprite fliph
 func spritedir_loop():
-	if(movedir.x > 0):
-		sprite.scale.x = sprite.scale.y * 1
-	elif(movedir.x < 0):
-		sprite.scale.x = sprite.scale.y * -1
+	if(knockdir != null):
+		if(knockdir.x < 0):
+			sprite.scale.x = sprite.scale.y * -1
+		elif(knockdir.x > 0):
+			sprite.scale.x = sprite.scale.y * 1
+	else:
+		if(movedir.x > 0):
+			sprite.scale.x = sprite.scale.y * 1
+		elif(movedir.x < 0):
+			sprite.scale.x = sprite.scale.y * -1
 
 func state_idle():
-	knockdir = null
 	if(movedir != Vector2(0,0)):
-		if(speed == 0):
-			speed += 1
+		speed = accelerate(speed)
+		if(speed >= 300):
+			anim_switch('run')
 		else:
-			speed = accelerate(speed)
-			if(speed >= 300):
-				anim_switch('run')
-			else:
-				anim_switch('walk')
+			anim_switch('walk')
 	else:
 		speed = decelerate(speed)
 		anim_switch('idle')
@@ -87,7 +93,10 @@ func state_attack():
 	speed = decelerate(speed)
 	if(timers['combo_timer'] < 0):
 		current_attack_index = 1
-		state_machine('idle')
+		if(is_in_group('players')):
+			state_machine('idle')
+		else:
+			state_machine('seek')
 
 func state_defend():
 	speed = decelerate(speed)
@@ -95,7 +104,6 @@ func state_defend():
 	
 func blast():
 	speed = decelerate(speed)
-	var type = ''
 	if(is_in_group('players')):
 		type = '_player'
 	else:
@@ -113,12 +121,20 @@ func state_jump(d):
 		sprite.position.y -= jump_constant
 		timers['jump_timer'] -= d
 	else:
-		anim_switch('land')
 		state_machine('land')
 
 func state_land():
+	anim_switch('land')
 	if(get_shadow_diff() > default_shadow_diff):
-		sprite.position.y += 10
+		sprite.position.y += 8
+	else:
+		state_machine('idle')
+		
+func flying_strike():
+	anim_switch('flying_strike')
+	if(get_shadow_diff() > default_shadow_diff):
+		sprite.position.y += 8
+		global_position.x += 16 * lastdirection.x
 	else:
 		state_machine('idle')
 
@@ -131,10 +147,13 @@ func state_fly():
 		speed = decelerate(speed)
 	else:
 		speed = accelerate(speed)
-	movement_loop()
 
 func state_stagger():
+	init_movement()
+	speed = decelerate(speed)
 	if(timers['stun_timer'] < 0):
+		knockdir = null
+		
 		state_machine('idle')
 
 func state_crash():
@@ -145,24 +164,50 @@ func state_crash():
 		state_machine('recover')
 
 func state_recover():
-	knockdir = null
 	anim_switch('recover')
+	
+func state_grapple():
+	anim_switch('grab')
+	
+func state_clinched():
+	pass
+
+func state_charge():
+	if(timers['charge_timer'] > 0):
+		speed = min(speed, 50)
+		speed = accelerate(speed)
+		anim_switch('charge')
+		global_position.x += 16 * lastdirection.x
+	else:
+		timers['cool_down'] = 5
+		state_machine('seek')
+	
+func state_windup():
+	if(timers['wind_up'] > 0):
+		speed = decelerate(speed)
+		anim_switch('wind_up')
+	else:
+		timers['charge_timer'] = 2
+		state_machine('charge')
+
+func state_die():
+	anim_switch('die')
 	
 func damage_loop():
 	health -= 1
 
 func attack_input_pressed():
 	current_attack_index += 1
-	current_attack_index = min(current_attack_index, max_combo_index)
 	state_machine('attack')
 	reset_combo_timer()
 
 func reset_combo_timer():
-	timers['combo_timer'] = 0.5 + handicap['combo_time']
-	if(current_attack_index <= max_combo_index or anim.current_animation != 'heavy_attack3'):
-		timers['cool_down'] = 0.3 + handicap['lite']
+	timers['combo_timer'] = 0.7
+	if(current_attack_index <= max_combo_index and anim.current_animation != 'heavy_attack3'):
+		timers['cool_down'] = 0.5
 	else:
-		timers['cool_down'] = 0.7 + handicap['heavy']
+		current_attack_index = 1
+		timers['cool_down'] = 0.8
 	
 ##HELPER FUNCTIONS
 
@@ -186,14 +231,14 @@ func increment_timers(d):
 func accelerate(s):
 	if(state == 'fly'):
 		return lerp(s, max_speed, 0.3)
-	if(s < max_speed):
+	elif(s < max_speed):
 		return lerp(s, max_speed, acceleration_constant)
 	return max_speed
 
 func decelerate(s):
 	if(state == 'fly'):
 		return lerp(s, 0, 0.1)
-	if(s > 0):
+	elif(s > 0):
 		return lerp(s, 0, 0.2)
 	return 0
 	
@@ -201,25 +246,13 @@ func get_knockdir(c):
 	var pos = self.global_position
 	return c.global_position.direction_to(pos)
 
-func _on_HitBox_area_entered(area):
-	if(area.is_in_group('attacks')):
-		var groups = get_groups()
-		for group in groups:
-			if(area.is_in_group(group) and group != 'physics_process'):
-				return
-		knockdir = get_knockdir(area)
-		timers['stun_timer'] = 0.3
-		if(state == 'fly' or state == 'jump' or state == 'land' or state == 'takeoff'):
-			damage_loop()
-			state_machine('crash')
-		elif(state != 'defend'):
-			damage_loop()
-			anim_switch('stagger')
-			state_machine('stagger')
-
 func clamp_movement():
-	position.x = clamp(position.x, 0, 10000)
-	position.y = clamp(position.y, 0, 1000)
+	position.x = clamp(position.x, 10, x_limit - 10)
+	position.y = clamp(position.y, 10, y_limit - 10)
 
 func get_shadow_diff():
 	return abs(sprite.position.y - shadow.position.y)
+
+func init_movement():
+	if(speed == 0):
+			speed += 1

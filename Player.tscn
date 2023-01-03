@@ -1,22 +1,22 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Fighter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
 [ext_resource path="res://shadow.png" type="Texture" id=3]
+[ext_resource path="res://nix_spritesheet.png" type="Texture" id=4]
 
-[sub_resource type="CircleShape2D" id=24]
-radius = 25.0
+[sub_resource type="CircleShape2D" id=1]
+radius = 20.0
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 20, 30 )
+[sub_resource type="RectangleShape2D" id=26]
+extents = Vector2( 10, 30 )
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 20, 35 )
+[sub_resource type="RectangleShape2D" id=27]
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 15, 25 )
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 30, 40 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.5
 step = 0.4
 tracks/0/type = "value"
@@ -31,56 +31,8 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 16 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/blast_spawn:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 40, -10 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitCol/HitCollider:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 step = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -95,7 +47,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
+tracks/1/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -104,34 +56,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ false ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.2
 step = 0.05
 tracks/0/type = "value"
@@ -147,7 +75,7 @@ tracks/0/keys = {
 "values": [ 27, 18 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
+tracks/1/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -158,44 +86,8 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 3.0
 step = 0.25
 tracks/0/type = "value"
@@ -211,16 +103,16 @@ tracks/0/keys = {
 "values": [ 18, 19, 20, 19 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
+tracks/1/path = NodePath("Sprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ false, true, false, true, false, true, false, true ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
@@ -234,44 +126,8 @@ tracks/2/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, false, true, false, true, false, true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 step = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -285,56 +141,25 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 29, 30 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
+
+[sub_resource type="Animation" id=10]
+resource_name = "flying_strike"
+length = 0.5
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"values": [ 38 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 length = 0.8
 step = 0.2
 tracks/0/type = "value"
@@ -371,7 +196,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 38, -10 ) ]
+"values": [ Vector2( 40, -10 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
@@ -385,32 +210,8 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 length = 0.8
 step = 0.2
 tracks/0/type = "value"
@@ -438,7 +239,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
+tracks/2/path = NodePath("Sprite/HitCol/HitCollider:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -446,11 +247,11 @@ tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
+"update": 0,
+"values": [ Vector2( 40, -10 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
+tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -459,22 +260,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 0.8
 step = 0.2
 tracks/0/type = "value"
@@ -511,7 +300,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 25, -25 ) ]
+"values": [ Vector2( 25, -20 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
@@ -525,32 +314,8 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -587,56 +352,8 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Body Collider:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -60, 30 ) ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -55, 0 ) ]
-}
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
 step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -649,93 +366,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 23, 24 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Body Collider:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -60, 30 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Body Collider:shape:extents")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 15, 30 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/HitCol/HitCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-
-[sub_resource type="Animation" id=14]
-step = 0.25
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 25, 26 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
@@ -761,44 +391,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
+
+[sub_resource type="Animation" id=16]
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ 26 ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Body Collider:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -60, 30 ) ]
+"values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=17]
 length = 0.5
 step = 0.25
 tracks/0/type = "value"
@@ -835,7 +456,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 32, -8 ) ]
+"values": [ Vector2( 35, -5 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
@@ -849,32 +470,8 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=18]
 length = 0.5
 step = 0.25
 tracks/0/type = "value"
@@ -899,7 +496,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 32, -8 ) ]
+"values": [ Vector2( 30, -8 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite/HitCol/HitCollider:disabled")
@@ -925,32 +522,8 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=19]
 length = 0.5
 step = 0.25
 tracks/0/type = "value"
@@ -987,7 +560,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 32, -8 ) ]
+"values": [ Vector2( 30, -12 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
@@ -1001,32 +574,8 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=20]
 length = 0.5
 step = 0.25
 tracks/0/type = "value"
@@ -1063,7 +612,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 32, -8 ) ]
+"values": [ Vector2( 30, -12 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
@@ -1077,32 +626,8 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=21]
 length = 0.5
 step = 0.2
 tracks/0/type = "value"
@@ -1141,32 +666,8 @@ tracks/2/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=22]
 step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -1204,32 +705,8 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=23]
 length = 0.5
 step = 0.4
 tracks/0/type = "value"
@@ -1266,34 +743,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=24]
 step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -1307,44 +760,8 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 27, 28, 29, 30 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 3.66904e-05 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, true ]
-}
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=25]
 step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -1358,166 +775,83 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 3, 2, 4, 2 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite/HitCol/HitCollider:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite/HitBox/HitBoxCol:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/InteractCol/InteractCollider:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/PowerUpCol/PowerUpCollider:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
 [node name="Player" groups=[
 "players",
 ] instance=ExtResource( 1 )]
-collision_layer = 257
+collision_layer = 1
+collision_mask = 1025
 script = ExtResource( 2 )
 max_speed = 500
 max_combo_index = 4
 acceleration_constant = 0.2
 
 [node name="Body Collider" parent="." index="0"]
-position = Vector2( -60, 30 )
+position = Vector2( 0, 30 )
 z_index = 2
-shape = SubResource( 24 )
+shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
-position = Vector2( -55, 0 )
 z_index = 1
+texture = ExtResource( 4 )
+hframes = 39
 frame = 26
 
 [node name="blast_spawn" parent="Sprite" index="0"]
-visible = false
 position = Vector2( 40, -10 )
 
-[node name="HitCol" parent="Sprite" index="1" groups=[
-"players",
-]]
-visible = false
+[node name="HitBox" parent="Sprite" index="1"]
+collision_layer = 2
+collision_mask = 20480
 
-[node name="HitCollider" parent="Sprite/HitCol" index="0" groups=[
-"players",
-]]
-position = Vector2( 38, -10 )
+[node name="HitBoxCol" parent="Sprite/HitBox" index="0"]
+shape = SubResource( 26 )
 
-[node name="HitBox" parent="Sprite" index="2" groups=[
-"players",
-]]
-visible = false
+[node name="HitCol" parent="Sprite" index="2"]
+collision_layer = 4
+collision_mask = 2048
 
-[node name="HitBoxCol" parent="Sprite/HitBox" index="0" groups=[
-"players",
-]]
-
-[node name="InRangeCollider" parent="Sprite" index="3"]
-visible = false
-
-[node name="CollisionShape2D" parent="Sprite/InRangeCollider" index="0"]
-position = Vector2( 40, 0 )
-shape = SubResource( 1 )
-
-[node name="InteractCol" type="Area2D" parent="Sprite" index="4" groups=[
-"interact_col",
-"players",
-]]
-visible = false
-collision_layer = 16
-collision_mask = 16
-
-[node name="InteractCollider" type="CollisionShape2D" parent="Sprite/InteractCol" index="0" groups=[
-"interact_col",
-"players",
-]]
-position = Vector2( 35, 0 )
-shape = SubResource( 2 )
+[node name="HitCollider" parent="Sprite/HitCol" index="0"]
+position = Vector2( 30, -12 )
+shape = SubResource( 27 )
 disabled = true
 
-[node name="PowerUpCol" type="Area2D" parent="Sprite" index="5" groups=[
-"players",
-"power_up_col",
-]]
-visible = false
-collision_layer = 32
-collision_mask = 32
+[node name="InRangeCol" parent="Sprite" index="3"]
+collision_layer = 8
+collision_mask = 1025
 
-[node name="PowerUpCollider" type="CollisionShape2D" parent="Sprite/PowerUpCol" index="0" groups=[
-"players",
-"power_up_col",
-]]
-position = Vector2( 0, 20 )
-shape = SubResource( 3 )
-disabled = true
+[node name="InRangeCollider" parent="Sprite/InRangeCol" index="0"]
+position = Vector2( -30, 0 )
+shape = SubResource( 28 )
 
 [node name="anim" type="AnimationPlayer" parent="." index="2"]
-anims/blast = SubResource( 4 )
-anims/block = SubResource( 5 )
-anims/crash = SubResource( 6 )
-anims/die = SubResource( 7 )
-anims/fly = SubResource( 8 )
-anims/heavy_attack1 = SubResource( 9 )
-anims/heavy_attack2 = SubResource( 10 )
-anims/heavy_attack3 = SubResource( 11 )
-anims/idle = SubResource( 12 )
-anims/jump = SubResource( 13 )
-anims/land = SubResource( 14 )
-anims/lite_attack1 = SubResource( 15 )
-anims/lite_attack2 = SubResource( 16 )
-anims/lite_attack3 = SubResource( 17 )
-anims/lite_attack4 = SubResource( 18 )
-anims/recover = SubResource( 19 )
-anims/run = SubResource( 20 )
-anims/stagger = SubResource( 21 )
-anims/takeoff = SubResource( 22 )
-anims/walk = SubResource( 23 )
+anims/blast = SubResource( 5 )
+anims/block = SubResource( 6 )
+anims/crash = SubResource( 7 )
+anims/die = SubResource( 8 )
+anims/fly = SubResource( 9 )
+anims/flying_strike = SubResource( 10 )
+anims/heavy_attack1 = SubResource( 11 )
+anims/heavy_attack2 = SubResource( 12 )
+anims/heavy_attack3 = SubResource( 13 )
+anims/idle = SubResource( 14 )
+anims/jump = SubResource( 15 )
+anims/land = SubResource( 16 )
+anims/lite_attack1 = SubResource( 17 )
+anims/lite_attack2 = SubResource( 18 )
+anims/lite_attack3 = SubResource( 19 )
+anims/lite_attack4 = SubResource( 20 )
+anims/recover = SubResource( 21 )
+anims/run = SubResource( 22 )
+anims/stagger = SubResource( 23 )
+anims/takeoff = SubResource( 24 )
+anims/walk = SubResource( 25 )
 
 [node name="Camera2D" type="Camera2D" parent="." index="3"]
 current = true
 
-[node name="Shadow2" type="Sprite" parent="." index="4"]
-position = Vector2( -60, 45 )
+[node name="Shadow" parent="." index="4"]
+position = Vector2( -5, 45 )
+z_index = 1
 texture = ExtResource( 3 )
-
-[node name="Shadow" parent="." index="5"]
-position = Vector2( -60, 45 )
-[connection signal="area_entered" from="Sprite/PowerUpCol" to="." method="_on_PowerUpCol_area_entered"]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

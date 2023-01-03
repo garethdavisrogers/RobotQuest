@@ -1,0 +1,16 @@
+Layer 1 - BodyCollider
+Layer 2 - HitBox
+Layer 3 - HitCollider
+Layer 4 - InRangeCollider
+Layer 5 - GrappleCollider
+Layer 6 - Detector
+Layer 7 - PowerUps
+Layer 8 - Interact
+
+Row 1 - Players
+Row 2 - Enemies
+
+Scopes for enemy physics process
+1-Level bound function: clamp
+2-Health:Death
+3-Player_detected:state idle

@@ -1,16 +1,7 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
+[gd_scene format=2]
 
 [node name="Level" type="Node2D"]
 
-[node name="YSort" type="YSort" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 
-[node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 199.859, 235.433 )
-
-[node name="Enemy" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 745.316, 250.036 )
-
-[node name="Enemy2" parent="YSort" instance=ExtResource( 2 )]
+[node name="StaticBodies" type="Node2D" parent="Sprite"]
