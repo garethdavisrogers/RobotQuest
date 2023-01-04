@@ -126,6 +126,7 @@ func _on_HitBox_area_entered(area):
 	elif(area.is_in_group('attacks')):
 		knockdir = get_knockdir(area)
 		timers['stun_timer'] = 0.2
+		hit1.play()
 		state_machine('stagger')
 
 

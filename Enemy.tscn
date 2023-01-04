@@ -5,25 +5,25 @@
 [ext_resource path="res://Enemy.gd" type="Script" id=3]
 [ext_resource path="res://shadow.png" type="Texture" id=4]
 
-[sub_resource type="CircleShape2D" id=16]
+[sub_resource type="CircleShape2D" id=1]
 radius = 30.0
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 25, 50 )
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 15, 15 )
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 20, 50 )
 
-[sub_resource type="CircleShape2D" id=22]
+[sub_resource type="CircleShape2D" id=5]
 radius = 500.0
 
-[sub_resource type="CircleShape2D" id=21]
+[sub_resource type="CircleShape2D" id=6]
 radius = 30.0
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=7]
 step = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -86,7 +86,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=8]
 length = 3.0
 step = 0.25
 tracks/0/type = "value"
@@ -162,8 +162,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "grab"
+[sub_resource type="Animation" id=9]
 length = 0.5
 step = 0.2
 tracks/0/type = "value"
@@ -251,7 +250,7 @@ tracks/6/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -301,7 +300,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=11]
 length = 1.5
 step = 0.2
 tracks/0/type = "value"
@@ -377,7 +376,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=12]
 length = 1.5
 step = 0.2
 tracks/0/type = "value"
@@ -453,8 +452,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "pummel"
+[sub_resource type="Animation" id=13]
 length = 0.8
 step = 0.2
 tracks/0/type = "value"
@@ -542,7 +540,7 @@ tracks/6/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=14]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -605,7 +603,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=15]
 step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -668,7 +666,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=16]
 length = 0.6
 step = 0.2
 tracks/0/type = "value"
@@ -708,7 +706,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="CircleShape2D" id=13]
+[sub_resource type="CircleShape2D" id=17]
 radius = 700.0
 
 [node name="Enemy" groups=[
@@ -724,7 +722,7 @@ max_combo_index = 2
 
 [node name="Body Collider" parent="." index="0"]
 position = Vector2( 5, 40 )
-shape = SubResource( 16 )
+shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 2 )
@@ -739,7 +737,7 @@ collision_layer = 2048
 collision_mask = 20
 
 [node name="HitBoxCol" parent="Sprite/HitBox" index="0"]
-shape = SubResource( 17 )
+shape = SubResource( 2 )
 
 [node name="HitCol" parent="Sprite" index="2"]
 collision_layer = 4096
@@ -747,7 +745,7 @@ collision_mask = 2
 
 [node name="HitCollider" parent="Sprite/HitCol" index="0"]
 position = Vector2( 50, -15 )
-shape = SubResource( 18 )
+shape = SubResource( 3 )
 disabled = true
 
 [node name="InRangeCol" parent="Sprite" index="3"]
@@ -756,7 +754,7 @@ collision_mask = 1025
 
 [node name="InRangeCollider" parent="Sprite/InRangeCol" index="0"]
 position = Vector2( -30, 0 )
-shape = SubResource( 19 )
+shape = SubResource( 4 )
 
 [node name="ChargeRangeCol" type="Area2D" parent="Sprite" index="4"]
 visible = false
@@ -764,7 +762,7 @@ collision_layer = 65536
 collision_mask = 1025
 
 [node name="ChargeRangeCollider" type="CollisionShape2D" parent="Sprite/ChargeRangeCol" index="0"]
-shape = SubResource( 22 )
+shape = SubResource( 5 )
 
 [node name="GrappleCol" parent="Sprite" index="5"]
 collision_layer = 16384
@@ -772,30 +770,30 @@ collision_mask = 2
 
 [node name="GrappleCollider" parent="Sprite/GrappleCol" index="0"]
 position = Vector2( 60, 0 )
-shape = SubResource( 21 )
+shape = SubResource( 6 )
 disabled = true
 
 [node name="ClinchPoint" type="Position2D" parent="Sprite" index="6"]
 position = Vector2( 60, 10 )
 
 [node name="anim" type="AnimationPlayer" parent="." index="2"]
-anims/charge = SubResource( 3 )
-anims/die = SubResource( 4 )
-anims/grab = SubResource( 5 )
-anims/idle = SubResource( 6 )
-anims/lite_attack1 = SubResource( 7 )
-anims/lite_attack2 = SubResource( 8 )
-anims/pummel = SubResource( 9 )
-anims/stagger = SubResource( 10 )
-anims/walk = SubResource( 11 )
-anims/wind_up = SubResource( 12 )
+anims/charge = SubResource( 7 )
+anims/die = SubResource( 8 )
+anims/grab = SubResource( 9 )
+anims/idle = SubResource( 10 )
+anims/lite_attack1 = SubResource( 11 )
+anims/lite_attack2 = SubResource( 12 )
+anims/pummel = SubResource( 13 )
+anims/stagger = SubResource( 14 )
+anims/walk = SubResource( 15 )
+anims/wind_up = SubResource( 16 )
 
 [node name="Detector" type="Area2D" parent="." index="3"]
 collision_layer = 32768
 collision_mask = 1025
 
 [node name="DetectRadius" type="CollisionShape2D" parent="Detector" index="0"]
-shape = SubResource( 13 )
+shape = SubResource( 17 )
 
 [node name="Shadow" parent="." index="4"]
 position = Vector2( 0, 65 )

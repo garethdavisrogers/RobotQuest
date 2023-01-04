@@ -10,6 +10,8 @@ onready var in_range_col = $Sprite/InRangeCol
 onready var anim = $anim
 onready var clinch_point = $Sprite/ClinchPoint
 onready var shadow = $Shadow
+onready var hit1 = $Hit1
+onready var hit2 = $Hit2
 
 ##clamp
 var x_limit = 0
