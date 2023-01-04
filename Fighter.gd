@@ -12,6 +12,7 @@ onready var clinch_point = $Sprite/ClinchPoint
 onready var shadow = $Shadow
 onready var hit1 = $Hit1
 onready var hit2 = $Hit2
+onready var grab_sound = $grab_sound
 
 ##clamp
 var x_limit = 0
@@ -270,3 +271,25 @@ func get_shadow_diff():
 func init_movement():
 	if(speed == 0):
 			speed += 1
+
+func get_random_number(start, end):
+	var rand = RandomNumberGenerator.new()
+	rand.randomize()
+	return rand.randi_range(start, end)
+	
+func _on_HitBox_area_entered(area):
+	if(area.is_in_group('grapples')):
+		timers['stun_timer'] = 1
+		grab_sound.play()
+		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
+		state_machine('clinched')
+	elif(area.is_in_group('attacks')):
+		knockdir = get_knockdir(area)
+		timers['stun_timer'] = 0.2
+		hit1.play()
+		state_machine('stagger')
+		var num = get_random_number(1,2)
+		var sound_name = str('Hit',num)
+		var sound = get_node(sound_name)
+		sound.play()
+		state_machine('stagger')

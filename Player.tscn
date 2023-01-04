@@ -954,6 +954,5 @@ current = true
 position = Vector2( -5, 45 )
 z_index = 1
 texture = ExtResource( 3 )
-[connection signal="area_entered" from="Sprite/HitBox" to="." method="_on_HitBox_area_entered"]
 [connection signal="area_entered" from="Sprite/GrappleCol" to="." method="_on_GrappleCol_area_entered"]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

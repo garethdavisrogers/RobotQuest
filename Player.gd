@@ -117,19 +117,6 @@ func _on_PowerUpCol_area_entered(area):
 	if(area.is_in_group('small_power_ups')):
 		health = min(health + 25, max_health)
 
-
-func _on_HitBox_area_entered(area):
-	if(area.is_in_group('grapples')):
-		timers['stun_timer'] = 1
-		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
-		state_machine('clinched')
-	elif(area.is_in_group('attacks')):
-		knockdir = get_knockdir(area)
-		timers['stun_timer'] = 0.2
-		hit1.play()
-		state_machine('stagger')
-
-
 func _on_GrappleCol_area_entered(area):
 	if(area.is_in_group('enemies')):
 		state_machine('grapple')

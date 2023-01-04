@@ -111,11 +111,10 @@ func _on_InRangeCol_body_exited(_body):
 
 func _on_ChargeRangeCol_body_entered(body):
 	if(body.is_in_group('players') and timers['cool_down'] < 0):
-		var rng = RandomNumberGenerator.new()
-		rng.randomize()
-		var num = rng.randi_range(0, 3)
-		timers['wind_up'] = 1
-		state_machine('wind_up')
+		var rng = get_random_number(1,2)
+		if(rng % 2 == 0):
+			timers['wind_up'] = 1
+			state_machine('wind_up')
 		
 func _on_anim_animation_finished(anim_name):
 	if(anim_name=='die'):
@@ -127,15 +126,3 @@ func _on_GrappleCol_area_entered(area):
 	timers['cool_down'] = 1
 	timers['grapple_timer'] = 1
 	state_machine('grapple')
-
-
-func _on_HitBox_area_entered(area):
-	if(area.is_in_group('grapples')):
-		timers['stun_timer'] = 1
-		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
-		state_machine('clinched')
-	elif(area.is_in_group('attacks')):
-		knockdir = get_knockdir(area)
-		timers['stun_timer'] = 0.2
-		hit1.play()
-		state_machine('stagger')
