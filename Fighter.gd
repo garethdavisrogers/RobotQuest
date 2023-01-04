@@ -48,6 +48,8 @@ var timers = {
 	'wind_up': -1,
 	'grapple_timer': -1
 	}
+#handicaps
+var handicap = 0
 ##METHODS
 func _ready():
 	##distance between sprite and shadow for jumping etc
@@ -55,11 +57,13 @@ func _ready():
 	y_limit = get_owner().get_node('Sprite').texture.get_height()
 	default_shadow_diff = get_shadow_diff()
 	health = max_health
+	if(is_in_group('flying')):
+		remove_from_group('flying')
 	
 ##controls displacement
 func movement_loop():
 	var motion
-	var knockback = 400
+	var knockback = 250
 	if(knockdir != null):
 		motion = knockdir.normalized() * knockback
 	elif(movedir == Vector2(0, 0) and (speed > 0)):
@@ -98,7 +102,7 @@ func state_idle():
 		
 ##the overall attack state, returns to idle on timeout
 func state_attack():
-	speed = decelerate(speed)
+	speed = 50
 	if(timers['combo_timer'] < 0):
 		current_attack_index = 1
 		if(is_in_group('players')):
@@ -132,6 +136,8 @@ func state_jump(d):
 		state_machine('land')
 
 func state_land():
+	if(is_in_group('flying')):
+		remove_from_group('flying')
 	anim_switch('land')
 	if(get_shadow_diff() > default_shadow_diff):
 		sprite.position.y += 8
@@ -139,6 +145,8 @@ func state_land():
 		state_machine('idle')
 		
 func flying_strike():
+	if(is_in_group('flying')):
+		remove_from_group('flying')
 	anim_switch('flying_strike')
 	if(get_shadow_diff() > default_shadow_diff):
 		sprite.position.y += 8
@@ -147,6 +155,7 @@ func flying_strike():
 		state_machine('idle')
 
 func state_takeoff():
+	add_to_group('flying')
 	speed = decelerate(speed)
 	anim_switch('takeoff')
 	
@@ -165,8 +174,10 @@ func state_stagger():
 func state_crash():
 	anim_switch('crash')
 	if(get_shadow_diff() > default_shadow_diff):
-		sprite.position.y += 12
+		sprite.position.y += 10
 	else:
+		if(is_in_group('flying')):
+			remove_from_group('flying')
 		state_machine('recover')
 
 func state_recover():
@@ -175,9 +186,10 @@ func state_recover():
 func state_grapple():
 	knockdir = null
 	speed = 0
-	if(timers['cool_down'] < 0):
-		if(is_in_group('enemies')):
-			anim_switch('pummel')
+	movedir = Vector2(0, 0)
+	if(timers['cool_down'] < 0 and is_in_group('enemies')):
+		global_position.x += 2 * lastdirection.x
+		anim_switch('pummel')
 	else:
 		anim_switch('grab')
 	
@@ -190,21 +202,25 @@ func state_clinched():
 		state_machine('idle')
 
 func state_charge():
-	if(timers['charge_timer'] > 0):
+	if(timers['charge_timer'] > 0 and timers['cool_down'] < 0):
 		anim_switch('charge')
 		global_position.x += 12 * lastdirection.x
+		global_position.y += 6 * lastdirection.y
 	else:
-		timers['cool_down'] = 2
+		timers['cool_down'] = 3
 		state_machine('seek')
 	
-func state_windup():
+func state_windup(in_air=false):
 	if(timers['wind_up'] > 0):
 		speed = decelerate(speed)
 		anim_switch('wind_up')
 	else:
-		timers['charge_timer'] = 1
-		state_machine('charge')
-
+		if(in_air):
+			state_machine('air_attack')
+		else:
+			timers['charge_timer'] = 1
+			state_machine('charge')
+	
 func state_die():
 	anim_switch('die')
 	
@@ -217,12 +233,12 @@ func attack_input_pressed():
 	reset_combo_timer()
 
 func reset_combo_timer():
-	timers['combo_timer'] = 0.5
+	timers['combo_timer'] = 0.3 + handicap
 	if(current_attack_index <= max_combo_index and anim.current_animation != 'heavy_attack3'):
-		timers['cool_down'] = 0.3
+		timers['cool_down'] = 0.15 + handicap
 	else:
 		current_attack_index = 1
-		timers['cool_down'] = 0.8
+		timers['cool_down'] = 0.5 + handicap
 	
 ##HELPER FUNCTIONS
 
@@ -252,9 +268,9 @@ func accelerate(s):
 
 func decelerate(s):
 	if(state == 'fly'):
-		return lerp(s, 0, 0.1)
+		return lerp(s, 0, 0.5)
 	elif(s > 0):
-		return lerp(s, 0, 0.2)
+		return lerp(s, 0, 0.1)
 	return 0
 	
 func get_knockdir(c):
@@ -268,6 +284,13 @@ func clamp_movement():
 func get_shadow_diff():
 	return abs(sprite.position.y - shadow.position.y)
 
+func state_is_aerial():
+	var aerial_states = ['jump','takeoff','land','crash','fly','flying_strike']
+	for s in aerial_states:
+		if(state == s):
+			return true
+	return false
+	
 func init_movement():
 	if(speed == 0):
 			speed += 1
@@ -279,17 +302,25 @@ func get_random_number(start, end):
 	
 func _on_HitBox_area_entered(area):
 	if(area.is_in_group('grapples')):
-		timers['stun_timer'] = 1
+		timers['stun_timer'] = 2
 		grab_sound.play()
 		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
 		state_machine('clinched')
 	elif(area.is_in_group('attacks')):
 		knockdir = get_knockdir(area)
-		timers['stun_timer'] = 0.2
+		timers['stun_timer'] = 0.4
 		hit1.play()
-		state_machine('stagger')
 		var num = get_random_number(1,2)
 		var sound_name = str('Hit',num)
 		var sound = get_node(sound_name)
 		sound.play()
-		state_machine('stagger')
+		var is_aerial = state_is_aerial()
+		if(state != 'defend'):
+			if(is_aerial):
+				damage_loop()
+				state_machine('crash')
+			else:
+				damage_loop()
+				state_machine('stagger')
+	elif(area.is_in_group('power_ups')):
+		health += 25

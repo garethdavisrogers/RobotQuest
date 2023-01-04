@@ -1,13 +1,17 @@
 extends "res://Fighter.gd"
 
+onready var health_bar = $HUD/VBox/HealthBar
+
 func _ready():
 	var camera = $Camera2D
 	camera.limit_left = 0
 	camera.limit_top = 0
 	camera.limit_right = x_limit
 	camera.limit_bottom = y_limit
+	health_bar.value = health
 	
 func _physics_process(delta):
+	update_ui()
 	increment_timers(delta)
 	init_movement()
 	can_attack_ground = false
@@ -41,6 +45,8 @@ func _physics_process(delta):
 				state_defend()
 			'clinched':
 				state_clinched()
+			'grapple':
+				state_grapple()
 			'flying_strike':
 				flying_strike()
 				
@@ -61,8 +67,9 @@ func controls_loop():
 	
 	if(timers['cool_down'] < 0 and state != 'stagger' and state != 'crash'):
 		##actions that can be taken when not stunned
-		
-		if(Input.is_action_just_pressed('lite_attack')):
+		if(Input.is_action_just_pressed('grab')):
+			state_machine('grapple')
+		elif(Input.is_action_just_pressed('lite_attack')):
 			if(can_attack_ground):
 				anim_switch(str('lite_attack', current_attack_index))
 				attack_input_pressed()
@@ -88,7 +95,6 @@ func controls_loop():
 				state_machine('defend')
 			
 		elif(Input.is_action_just_released('defend')):
-			if(can_attack_ground):
 				state_machine('idle')
 			
 		elif(Input.is_action_just_pressed('jump')):
@@ -100,6 +106,9 @@ func controls_loop():
 				state_machine('land')
 			elif(timers['jump_timer'] < 0.4):
 				state_machine('takeoff')
+				
+func update_ui():
+	health_bar.value = health
 				
 func _on_anim_animation_finished(anim_name):
 	if(anim_name == 'die'):
@@ -114,7 +123,7 @@ func _on_anim_animation_finished(anim_name):
 
 
 func _on_PowerUpCol_area_entered(area):
-	if(area.is_in_group('small_power_ups')):
+	if(area.is_in_group('quarter')):
 		health = min(health + 25, max_health)
 
 func _on_GrappleCol_area_entered(area):

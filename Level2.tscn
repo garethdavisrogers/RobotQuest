@@ -18,16 +18,21 @@ centered = false
 
 [node name="Player" parent="Sprite/YSort" groups=[
 "entity",
+"flying",
 ] instance=ExtResource( 2 )]
-position = Vector2( 2181.12, 434.543 )
-
-[node name="PowerUp" parent="Sprite/YSort" instance=ExtResource( 3 )]
-position = Vector2( 492.266, 237.343 )
+position = Vector2( 2053.92, 447.793 )
 
 [node name="Enemy" parent="Sprite/YSort" groups=[
 "entity",
+"flying",
 ] instance=ExtResource( 4 )]
-position = Vector2( 1330.46, 397.442 )
+position = Vector2( 1210.59, 451.065 )
+
+[node name="PowerUp" parent="Sprite/YSort" instance=ExtResource( 3 )]
+position = Vector2( 395.455, 359.505 )
+
+[node name="Enemy2" parent="Sprite/YSort" instance=ExtResource( 4 )]
+position = Vector2( 243.665, 419.423 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite"]
 

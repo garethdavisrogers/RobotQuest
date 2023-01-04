@@ -10,12 +10,15 @@ var target_distance = null
 var target_details = {
 	'target_position':null,
 	'target_direction':null,
-	'target_distance':null
+	'target_distance':null,
+	'target_is_flying':false
 	}
 var in_melee_attack_range = false
 var player_detected = false
 
 ##player_detected is based on enter/exit $Detector signals
+func _ready():
+	handicap = 0.3
 	
 func _physics_process(delta):
 	increment_timers(delta)
@@ -29,14 +32,18 @@ func _physics_process(delta):
 		if(state != 'grapple' and state != 'clinched'):
 			if(player_detected):
 				get_player_info()
+				movedir = target_details['target_direction']
 				##enemy can only function if not staggered
 				##seek target
 				if(timers['stun_timer'] < 0):
 					knockdir = null
-					if(timers['cool_down'] < 0 and state != 'wind_up' and state != 'charge'):
+					if(timers['cool_down'] < 0 and state != 'wind_up' and state != 'charge' and state != 'air_attack'):
 						if(in_melee_attack_range):
 							anim_switch(str('lite_attack', current_attack_index))
 							attack_input_pressed()
+						elif(target_details['target_is_flying']):
+							timers['wind_up'] = 1
+							state_machine('wind_up')
 						else:
 							current_attack_index = 1
 							state_machine('seek')
@@ -47,11 +54,13 @@ func _physics_process(delta):
 				movedir = Vector2(0,0)
 				state_machine('idle')
 	else:
-		anim_switch('idle')
+		state_machine('die')
 		
 	match state:
 			'attack':
 				state_attack()
+			'air_attack':
+				state_air_attack()
 			'seek':
 				state_seek()
 			'idle':
@@ -67,7 +76,7 @@ func _physics_process(delta):
 			'clinched':
 				state_clinched()
 			'wind_up':
-				state_windup()
+				state_windup(target_details['target_is_flying'])
 			'die':
 				state_die()
 	
@@ -76,7 +85,6 @@ func state_seek():
 	current_attack_index = 1
 	speed = accelerate(speed)
 	anim_switch('walk')
-	movedir = target_details['target_direction']
 
 func get_player_info():
 	var entities = detector.get_overlapping_bodies()
@@ -86,6 +94,17 @@ func get_player_info():
 			target_details['target_position'] = sprite_pos.global_position
 			target_details['target_direction'] = global_position.direction_to(target_details['target_position'])
 			target_details['target_distance'] = global_position.distance_to(target_details['target_position'])
+			if(entity.is_in_group('flying')):
+				target_details['target_is_flying'] = true
+			else:
+				target_details['target_is_flying'] = false
+
+func state_air_attack():
+	if(target_details['target_is_flying']):
+		speed = 1
+		anim_switch('air_attack')
+	else:
+		state_machine('seek')
 	
 func _on_Detector_body_entered(body):
 	if(body.is_in_group('players')):
