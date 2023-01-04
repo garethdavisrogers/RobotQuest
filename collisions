@@ -4,8 +4,9 @@ Layer 3 - HitCollider
 Layer 4 - InRangeCollider
 Layer 5 - GrappleCollider
 Layer 6 - Detector
-Layer 7 - PowerUps
-Layer 8 - Interact
+Layer 7 - ChargeRangeCollider
+Layer 8 - PowerUps
+Layer 9 - Interact
 
 Row 1 - Players
 Row 2 - Enemies

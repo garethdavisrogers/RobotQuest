@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Fighter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://krax_enforcer.png" type="Texture" id=2]
@@ -15,7 +15,13 @@ extents = Vector2( 25, 50 )
 extents = Vector2( 15, 15 )
 
 [sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 15, 50 )
+extents = Vector2( 20, 50 )
+
+[sub_resource type="CircleShape2D" id=22]
+radius = 500.0
+
+[sub_resource type="CircleShape2D" id=21]
+radius = 30.0
 
 [sub_resource type="Animation" id=3]
 step = 0.2
@@ -50,6 +56,30 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite/GrappleCol/GrappleCollider:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Overlay:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -119,6 +149,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Overlay:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "grab"
@@ -172,6 +214,42 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite/GrappleCol/GrappleCollider:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Overlay:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 27 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Overlay:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=6]
 tracks/0/type = "value"
@@ -205,6 +283,18 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Overlay:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -274,6 +364,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Overlay:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=8]
 length = 1.5
@@ -333,6 +435,18 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Overlay:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -403,6 +517,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite/GrappleCol/GrappleCollider:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Overlay:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=10]
 length = 0.5
@@ -449,6 +587,18 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Overlay:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -505,6 +655,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Overlay:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=12]
 length = 0.6
@@ -533,6 +695,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Overlay:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="CircleShape2D" id=13]
 radius = 700.0
@@ -554,10 +728,11 @@ shape = SubResource( 16 )
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 2 )
-hframes = 26
+hframes = 28
+frame = 0
 
 [node name="blast_spawn" parent="Sprite" index="0"]
-position = Vector2( 70, 0 )
+position = Vector2( 80, 0 )
 
 [node name="HitBox" parent="Sprite" index="1"]
 collision_layer = 2048
@@ -583,6 +758,26 @@ collision_mask = 1025
 position = Vector2( -30, 0 )
 shape = SubResource( 19 )
 
+[node name="ChargeRangeCol" type="Area2D" parent="Sprite" index="4"]
+visible = false
+collision_layer = 65536
+collision_mask = 1025
+
+[node name="ChargeRangeCollider" type="CollisionShape2D" parent="Sprite/ChargeRangeCol" index="0"]
+shape = SubResource( 22 )
+
+[node name="GrappleCol" parent="Sprite" index="5"]
+collision_layer = 16384
+collision_mask = 2
+
+[node name="GrappleCollider" parent="Sprite/GrappleCol" index="0"]
+position = Vector2( 60, 0 )
+shape = SubResource( 21 )
+disabled = true
+
+[node name="ClinchPoint" type="Position2D" parent="Sprite" index="6"]
+position = Vector2( 60, 10 )
+
 [node name="anim" type="AnimationPlayer" parent="." index="2"]
 anims/charge = SubResource( 3 )
 anims/die = SubResource( 4 )
@@ -596,19 +791,26 @@ anims/walk = SubResource( 11 )
 anims/wind_up = SubResource( 12 )
 
 [node name="Detector" type="Area2D" parent="." index="3"]
-visible = false
 collision_layer = 32768
 collision_mask = 1025
 
 [node name="DetectRadius" type="CollisionShape2D" parent="Detector" index="0"]
-position = Vector2( -85, 0 )
 shape = SubResource( 13 )
 
 [node name="Shadow" parent="." index="4"]
 position = Vector2( 0, 65 )
 texture = ExtResource( 4 )
+
+[node name="Overlay" parent="." index="5"]
+visible = false
+texture = ExtResource( 2 )
+hframes = 28
+frame = 27
+[connection signal="area_entered" from="Sprite/HitBox" to="." method="_on_HitBox_area_entered"]
 [connection signal="body_entered" from="Sprite/InRangeCol" to="." method="_on_InRangeCol_body_entered"]
 [connection signal="body_exited" from="Sprite/InRangeCol" to="." method="_on_InRangeCol_body_exited"]
+[connection signal="body_entered" from="Sprite/ChargeRangeCol" to="." method="_on_ChargeRangeCol_body_entered"]
+[connection signal="area_entered" from="Sprite/GrappleCol" to="." method="_on_GrappleCol_area_entered"]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="body_entered" from="Detector" to="." method="_on_Detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_Detector_body_exited"]

@@ -26,11 +26,15 @@ collision_mask = 0
 
 [node name="HitBoxCol" type="CollisionShape2D" parent="Sprite/HitBox"]
 
-[node name="HitCol" type="Area2D" parent="Sprite"]
+[node name="HitCol" type="Area2D" parent="Sprite" groups=[
+"attacks",
+]]
 collision_layer = 0
 collision_mask = 0
 
-[node name="HitCollider" type="CollisionShape2D" parent="Sprite/HitCol"]
+[node name="HitCollider" type="CollisionShape2D" parent="Sprite/HitCol" groups=[
+"attacks",
+]]
 
 [node name="InRangeCol" type="Area2D" parent="Sprite"]
 position = Vector2( 85, 0 )
@@ -39,4 +43,17 @@ collision_mask = 0
 
 [node name="InRangeCollider" type="CollisionShape2D" parent="Sprite/InRangeCol"]
 
+[node name="GrappleCol" type="Area2D" parent="Sprite" groups=[
+"grapples",
+]]
+collision_layer = 0
+collision_mask = 0
+
+[node name="GrappleCollider" type="CollisionShape2D" parent="Sprite/GrappleCol" groups=[
+"grapples",
+]]
+
 [node name="Shadow" type="Sprite" parent="."]
+
+[node name="Overlay" type="Sprite" parent="."]
+z_index = 2

@@ -2,11 +2,13 @@ extends KinematicBody2D
 
 ##load nodes
 onready var sprite = $Sprite
+onready var overlay = $Overlay
 onready var blast_spawn = $Sprite/blast_spawn
 onready var hitcol = $Sprite/HitCol
 onready var hitbox = $Sprite/HitBox
 onready var in_range_col = $Sprite/InRangeCol
 onready var anim = $anim
+onready var clinch_point = $Sprite/ClinchPoint
 onready var shadow = $Shadow
 
 ##clamp
@@ -40,7 +42,8 @@ var timers = {
 	'stun_timer': -1, 
 	'combo_timer': -1,
 	'charge_timer': -1,
-	'wind_up': -1
+	'wind_up': -1,
+	'grapple_timer': -1
 	}
 ##METHODS
 func _ready():
@@ -53,7 +56,7 @@ func _ready():
 ##controls displacement
 func movement_loop():
 	var motion
-	var knockback = 350
+	var knockback = 400
 	if(knockdir != null):
 		motion = knockdir.normalized() * knockback
 	elif(movedir == Vector2(0, 0) and (speed > 0)):
@@ -68,14 +71,16 @@ func movement_loop():
 func spritedir_loop():
 	if(knockdir != null):
 		if(knockdir.x < 0):
-			sprite.scale.x = sprite.scale.y * -1
-		elif(knockdir.x > 0):
 			sprite.scale.x = sprite.scale.y * 1
+		elif(knockdir.x > 0):
+			sprite.scale.x = sprite.scale.y * -1
 	else:
 		if(movedir.x > 0):
 			sprite.scale.x = sprite.scale.y * 1
+			overlay.scale.x = sprite.scale.y * 1
 		elif(movedir.x < 0):
 			sprite.scale.x = sprite.scale.y * -1
+			overlay.scale.x = sprite.scale.y * -1
 
 func state_idle():
 	if(movedir != Vector2(0,0)):
@@ -134,7 +139,7 @@ func flying_strike():
 	anim_switch('flying_strike')
 	if(get_shadow_diff() > default_shadow_diff):
 		sprite.position.y += 8
-		global_position.x += 16 * lastdirection.x
+		global_position.x += 12 * lastdirection.x
 	else:
 		state_machine('idle')
 
@@ -149,11 +154,9 @@ func state_fly():
 		speed = accelerate(speed)
 
 func state_stagger():
-	init_movement()
-	speed = decelerate(speed)
+	anim_switch('stagger')
 	if(timers['stun_timer'] < 0):
 		knockdir = null
-		
 		state_machine('idle')
 
 func state_crash():
@@ -167,19 +170,28 @@ func state_recover():
 	anim_switch('recover')
 	
 func state_grapple():
-	anim_switch('grab')
+	knockdir = null
+	speed = 0
+	if(timers['cool_down'] < 0):
+		if(is_in_group('enemies')):
+			anim_switch('pummel')
+	else:
+		anim_switch('grab')
 	
 func state_clinched():
-	pass
+	if(timers['stun_timer'] > 0):
+		knockdir = null
+		speed = 0
+		anim_switch('clinched')
+	else:
+		state_machine('idle')
 
 func state_charge():
 	if(timers['charge_timer'] > 0):
-		speed = min(speed, 50)
-		speed = accelerate(speed)
 		anim_switch('charge')
-		global_position.x += 16 * lastdirection.x
+		global_position.x += 12 * lastdirection.x
 	else:
-		timers['cool_down'] = 5
+		timers['cool_down'] = 2
 		state_machine('seek')
 	
 func state_windup():
@@ -187,7 +199,7 @@ func state_windup():
 		speed = decelerate(speed)
 		anim_switch('wind_up')
 	else:
-		timers['charge_timer'] = 2
+		timers['charge_timer'] = 1
 		state_machine('charge')
 
 func state_die():
@@ -202,9 +214,9 @@ func attack_input_pressed():
 	reset_combo_timer()
 
 func reset_combo_timer():
-	timers['combo_timer'] = 0.7
+	timers['combo_timer'] = 0.5
 	if(current_attack_index <= max_combo_index and anim.current_animation != 'heavy_attack3'):
-		timers['cool_down'] = 0.5
+		timers['cool_down'] = 0.3
 	else:
 		current_attack_index = 1
 		timers['cool_down'] = 0.8
@@ -243,7 +255,7 @@ func decelerate(s):
 	return 0
 	
 func get_knockdir(c):
-	var pos = self.global_position
+	var pos = self.get_global_position()
 	return c.global_position.direction_to(pos)
 
 func clamp_movement():

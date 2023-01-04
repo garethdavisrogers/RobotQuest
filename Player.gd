@@ -15,36 +15,38 @@ func _physics_process(delta):
 		can_attack_ground = true
 	clamp_movement()
 	if(health > 0):
-		movement_loop()
-		
-		if(timers['stun_timer'] < 0):
+		if(timers['stun_timer']<0):
 			knockdir = null
-			match state:
-				'attack':
-					state_attack()
-				'jump':
-					state_jump(delta)
-				'land':
-					state_land()
-				'takeoff':
-					state_takeoff()
-				'fly':
-					state_fly()
-				'idle':
-					state_idle()
-				'stagger':
-					state_stagger()
-				'crash':
-					state_crash()
-				'recover':
-					state_recover()
-				'defend':
-					state_defend()
-				'flying_strike':
-					flying_strike()
-					
+		movement_loop()
+		match state:
+			'attack':
+				state_attack()
+			'jump':
+				state_jump(delta)
+			'land':
+				state_land()
+			'takeoff':
+				state_takeoff()
+			'fly':
+				state_fly()
+			'idle':
+				state_idle()
+			'stagger':
+				state_stagger()
+			'crash':
+				state_crash()
+			'recover':
+				state_recover()
+			'defend':
+				state_defend()
+			'clinched':
+				state_clinched()
+			'flying_strike':
+				flying_strike()
+				
+		spritedir_loop()
+		if(state != 'clinched' and state != 'stagger'):
 			controls_loop()
-			spritedir_loop()
 	else:
 		anim_switch('die')
 		
@@ -114,3 +116,20 @@ func _on_anim_animation_finished(anim_name):
 func _on_PowerUpCol_area_entered(area):
 	if(area.is_in_group('small_power_ups')):
 		health = min(health + 25, max_health)
+
+
+func _on_HitBox_area_entered(area):
+	if(area.is_in_group('grapples')):
+		timers['stun_timer'] = 1
+		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
+		state_machine('clinched')
+	elif(area.is_in_group('attacks')):
+		knockdir = get_knockdir(area)
+		timers['stun_timer'] = 0.2
+		state_machine('stagger')
+
+
+func _on_GrappleCol_area_entered(area):
+	if(area.is_in_group('enemies')):
+		state_machine('grapple')
+		area.get_parent().global_position = clinch_point.get_position()
