@@ -103,6 +103,13 @@ func state_air_attack():
 	if(target_details['target_is_flying']):
 		speed = 1
 		anim_switch('air_attack')
+		if(timers['cool_down'] < 0):
+			var fist = load('res://Fist.tscn').instance()
+			var level = get_owner()
+			level.add_child(fist)
+			var spawn_pos = blast_spawn.get_global_position()
+			fist.set_position(spawn_pos)
+			timers['cool_down'] = 10
 	else:
 		state_machine('seek')
 	
@@ -144,4 +151,5 @@ func _on_anim_animation_finished(anim_name):
 func _on_GrappleCol_area_entered(area):
 	timers['cool_down'] = 1
 	timers['grapple_timer'] = 1
-	state_machine('grapple')
+	if(not area.is_in_group('flying')):
+		state_machine('grapple')

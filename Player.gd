@@ -127,6 +127,5 @@ func _on_PowerUpCol_area_entered(area):
 		health = min(health + 25, max_health)
 
 func _on_GrappleCol_area_entered(area):
-	if(area.is_in_group('enemies')):
-		state_machine('grapple')
-		area.get_parent().global_position = clinch_point.get_position()
+	state_machine('grapple')
+	area.get_parent().global_position = clinch_point.get_global_position()

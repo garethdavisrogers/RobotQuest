@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://cheyenne_level.png" type="Texture" id=1]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nix.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Health25.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
 
@@ -15,12 +15,6 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="YSort" type="YSort" parent="Sprite"]
-
-[node name="Player" parent="Sprite/YSort" groups=[
-"entity",
-"flying",
-] instance=ExtResource( 2 )]
-position = Vector2( 2053.92, 447.793 )
 
 [node name="Enemy" parent="Sprite/YSort" groups=[
 "entity",
@@ -51,3 +45,5 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Sprite/StaticBody2D"]
 position = Vector2( 4400, 70 )
 shape = SubResource( 1 )
+
+[node name="Nix" parent="." instance=ExtResource( 2 )]

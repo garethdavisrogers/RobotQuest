@@ -3,9 +3,6 @@
 [ext_resource path="res://energy_blast.png" type="Texture" id=1]
 [ext_resource path="res://blast.gd" type="Script" id=2]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 8.0
-
 [sub_resource type="Animation" id=2]
 resource_name = "explode"
 length = 0.6
@@ -39,30 +36,41 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[node name="blast" type="Node2D"]
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[node name="blast" type="Node2D" groups=[
+"attacks",
+]]
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Detector" type="Area2D" parent="."]
+[node name="Detector" type="Area2D" parent="." groups=[
+"attacks",
+]]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 2048
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Detector"]
+[node name="Sprite" type="Sprite" parent="Detector" groups=[
+"attacks",
+]]
 scale = Vector2( 2, 2 )
 z_index = 1
 texture = ExtResource( 1 )
 hframes = 6
-frame = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
-shape = SubResource( 1 )
 
 [node name="anim" type="AnimationPlayer" parent="Detector"]
 anims/explode = SubResource( 2 )
 anims/fire = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" groups=[
+"attacks",
+]]
+shape = SubResource( 1 )
+[connection signal="area_entered" from="Detector" to="." method="_on_Detector_area_entered"]
 [connection signal="animation_finished" from="Detector/anim" to="." method="_on_anim_animation_finished"]

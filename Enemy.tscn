@@ -187,7 +187,7 @@ tracks/5/keys = {
 "values": [ 31 ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=9]
 resource_name = "clinched"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -274,7 +274,7 @@ tracks/6/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 3.0
 step = 0.25
 tracks/0/type = "value"
@@ -350,7 +350,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.5
 step = 0.2
 tracks/0/type = "value"
@@ -411,7 +411,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ false ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("Overlay:frame")
@@ -438,7 +438,7 @@ tracks/6/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -488,9 +488,8 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 1.5
-step = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -498,7 +497,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 3, 4, 5 ]
@@ -576,9 +575,8 @@ tracks/6/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 1.5
-step = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -586,7 +584,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 3, 4, 6 ]
@@ -652,7 +650,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -738,7 +736,7 @@ tracks/6/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -813,7 +811,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -888,7 +886,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=18]
 length = 0.6
 step = 0.2
 tracks/0/type = "value"
@@ -940,7 +938,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=19]
 radius = 700.0
 
 [node name="Enemy" groups=[
@@ -953,90 +951,127 @@ script = ExtResource( 3 )
 max_speed = 250
 max_combo_index = 2
 
-[node name="Body Collider" parent="." index="0"]
+[node name="Body Collider" parent="." index="0" groups=[
+"enemies",
+]]
 position = Vector2( 5, 40 )
 shape = SubResource( 1 )
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" groups=[
+"enemies",
+]]
 texture = ExtResource( 2 )
 hframes = 33
-frame = 26
+frame = 15
 
-[node name="blast_spawn" parent="Sprite" index="0"]
-position = Vector2( 80, 0 )
+[node name="blast_spawn" parent="Sprite" index="0" groups=[
+"enemies",
+]]
+position = Vector2( 30, -70 )
 
-[node name="HitBox" parent="Sprite" index="1"]
+[node name="HitBox" parent="Sprite" index="1" groups=[
+"enemies",
+]]
 collision_layer = 2048
 collision_mask = 20
 
-[node name="HitBoxCol" parent="Sprite/HitBox" index="0"]
+[node name="HitBoxCol" parent="Sprite/HitBox" index="0" groups=[
+"enemies",
+]]
 shape = SubResource( 2 )
 
-[node name="HitCol" parent="Sprite" index="2"]
+[node name="HitCol" parent="Sprite" index="2" groups=[
+"enemies",
+]]
 collision_layer = 4096
 collision_mask = 2
 
-[node name="HitCollider" parent="Sprite/HitCol" index="0"]
-position = Vector2( 50, -15 )
+[node name="HitCollider" parent="Sprite/HitCol" index="0" groups=[
+"enemies",
+]]
+position = Vector2( 30, -50 )
 shape = SubResource( 3 )
 disabled = true
 
-[node name="InRangeCol" parent="Sprite" index="3"]
+[node name="InRangeCol" parent="Sprite" index="3" groups=[
+"enemies",
+]]
 collision_layer = 8192
 collision_mask = 1025
 
-[node name="InRangeCollider" parent="Sprite/InRangeCol" index="0"]
+[node name="InRangeCollider" parent="Sprite/InRangeCol" index="0" groups=[
+"enemies",
+]]
 position = Vector2( -40, 10 )
 shape = SubResource( 4 )
-disabled = true
 
-[node name="ChargeRangeCol" type="Area2D" parent="Sprite" index="4"]
+[node name="ChargeRangeCol" type="Area2D" parent="Sprite" index="4" groups=[
+"enemies",
+]]
 collision_layer = 65536
 collision_mask = 1025
 
-[node name="ChargeRangeCollider" type="CollisionShape2D" parent="Sprite/ChargeRangeCol" index="0"]
+[node name="ChargeRangeCollider" type="CollisionShape2D" parent="Sprite/ChargeRangeCol" index="0" groups=[
+"enemies",
+]]
 shape = SubResource( 5 )
 
-[node name="GrappleCol" parent="Sprite" index="5"]
+[node name="GrappleCol" parent="Sprite" index="5" groups=[
+"enemies",
+]]
 visible = false
 collision_layer = 16384
 collision_mask = 2
 
-[node name="GrappleCollider" parent="Sprite/GrappleCol" index="0"]
+[node name="GrappleCollider" parent="Sprite/GrappleCol" index="0" groups=[
+"enemies",
+]]
 position = Vector2( 60, 0 )
 shape = SubResource( 6 )
 disabled = true
 
-[node name="ClinchPoint" type="Position2D" parent="Sprite" index="6"]
+[node name="ClinchPoint" type="Position2D" parent="Sprite" index="6" groups=[
+"enemies",
+]]
 position = Vector2( 60, 10 )
 
-[node name="anim" type="AnimationPlayer" parent="." index="2"]
+[node name="anim" type="AnimationPlayer" parent="." index="2" groups=[
+"enemies",
+]]
 anims/air_attack = SubResource( 7 )
 anims/charge = SubResource( 8 )
-anims/clinched = SubResource( 19 )
-anims/die = SubResource( 9 )
-anims/grab = SubResource( 10 )
-anims/idle = SubResource( 11 )
-anims/lite_attack1 = SubResource( 12 )
-anims/lite_attack2 = SubResource( 13 )
-anims/pummel = SubResource( 14 )
-anims/stagger = SubResource( 15 )
-anims/walk = SubResource( 16 )
-anims/wind_up = SubResource( 17 )
+anims/clinched = SubResource( 9 )
+anims/die = SubResource( 10 )
+anims/grab = SubResource( 11 )
+anims/idle = SubResource( 12 )
+anims/lite_attack1 = SubResource( 13 )
+anims/lite_attack2 = SubResource( 14 )
+anims/pummel = SubResource( 15 )
+anims/stagger = SubResource( 16 )
+anims/walk = SubResource( 17 )
+anims/wind_up = SubResource( 18 )
 
-[node name="Detector" type="Area2D" parent="." index="3"]
+[node name="Detector" type="Area2D" parent="." index="3" groups=[
+"enemies",
+]]
 collision_layer = 32768
 collision_mask = 1025
 
-[node name="DetectRadius" type="CollisionShape2D" parent="Detector" index="0"]
-shape = SubResource( 18 )
+[node name="DetectRadius" type="CollisionShape2D" parent="Detector" index="0" groups=[
+"enemies",
+]]
+shape = SubResource( 19 )
 
-[node name="Shadow" parent="." index="4"]
+[node name="Shadow" parent="." index="4" groups=[
+"enemies",
+]]
 position = Vector2( 5, 75 )
 scale = Vector2( 2, 1 )
 texture = ExtResource( 4 )
 
-[node name="Overlay" parent="." index="5"]
+[node name="Overlay" parent="." index="5" groups=[
+"enemies",
+]]
 visible = false
 z_index = 3
 texture = ExtResource( 2 )

@@ -25,7 +25,9 @@ frame = 8
 
 [node name="blast_spawn" type="Position2D" parent="Sprite"]
 
-[node name="HitBox" type="Area2D" parent="Sprite"]
+[node name="HitBox" type="Area2D" parent="Sprite" groups=[
+"hitboxes",
+]]
 collision_layer = 0
 collision_mask = 0
 

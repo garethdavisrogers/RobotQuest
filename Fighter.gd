@@ -116,12 +116,7 @@ func state_defend():
 	
 func blast():
 	speed = decelerate(speed)
-	if(is_in_group('players')):
-		type = '_player'
-	else:
-		type = '_enemy'
-	var load_string = str('res://blast',type,'.tscn')
-	var blast = load(load_string).instance()
+	var blast = load('res://blast.tscn').instance()
 	blast.blastdir = lastdirection.x
 	var level = get_owner()
 	level.add_child(blast)

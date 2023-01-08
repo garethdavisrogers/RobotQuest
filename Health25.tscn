@@ -5,7 +5,7 @@
 [ext_resource path="res://powerup2.wav" type="AudioStream" id=3]
 
 [node name="PowerUp" groups=[
-"small_power_ups",
+"power_ups",
 ] instance=ExtResource( 1 )]
 z_index = 1
 
@@ -14,7 +14,13 @@ scale = Vector2( 1, 1 )
 z_index = 1
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" parent="Sprite/PlayerCol" index="0"]
+[node name="PlayerCol" parent="Sprite" index="0" groups=[
+"power_ups",
+]]
+
+[node name="CollisionShape2D" parent="Sprite/PlayerCol" index="0" groups=[
+"power_ups",
+]]
 position = Vector2( 0, 0 )
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="." index="1"]
