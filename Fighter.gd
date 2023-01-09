@@ -6,7 +6,6 @@ onready var overlay = $Overlay
 onready var blast_spawn = $Sprite/blast_spawn
 onready var hitcol = $Sprite/HitCol
 onready var hitbox = $Sprite/HitBox
-onready var in_range_col = $Sprite/InRangeCol
 onready var anim = $anim
 onready var clinch_point = $Sprite/ClinchPoint
 onready var shadow = $Shadow
@@ -24,7 +23,6 @@ export(int) var max_combo_index = 1
 export(float) var acceleration_constant = 0.1
 
 ##universal fighter attributes
-var type = 'enemies'
 var health = 10
 var default_shadow_diff = 45
 const time_till_next_input = 0.5
@@ -45,8 +43,7 @@ var timers = {
 	'stun_timer': -1, 
 	'combo_timer': -1,
 	'charge_timer': -1,
-	'wind_up': -1,
-	'grapple_timer': -1
+	'wind_up': -1
 	}
 #handicaps
 var handicap = 0
@@ -57,8 +54,6 @@ func _ready():
 	y_limit = get_owner().get_node('Sprite').texture.get_height()
 	default_shadow_diff = get_shadow_diff()
 	health = max_health
-	if(is_in_group('flying')):
-		remove_from_group('flying')
 	
 ##controls displacement
 func movement_loop():
@@ -70,7 +65,8 @@ func movement_loop():
 		motion = lastdirection * speed
 	else:
 		motion = movedir.normalized() * speed
-		lastdirection = movedir
+		if(movedir.x != 0):
+			lastdirection = movedir
 # warning-ignore:return_value_discarded
 	move_and_slide(motion, Vector2(0,0))
 
@@ -92,7 +88,7 @@ func spritedir_loop():
 func state_idle():
 	if(movedir != Vector2(0,0)):
 		speed = accelerate(speed)
-		if(speed >= 300):
+		if(speed >= 400):
 			anim_switch('run')
 		else:
 			anim_switch('walk')
@@ -102,7 +98,7 @@ func state_idle():
 		
 ##the overall attack state, returns to idle on timeout
 func state_attack():
-	speed = 50
+	speed = decelerate(speed)
 	if(timers['combo_timer'] < 0):
 		current_attack_index = 1
 		if(is_in_group('players')):
@@ -180,7 +176,6 @@ func state_recover():
 	
 func state_grapple():
 	knockdir = null
-	speed = 0
 	movedir = Vector2(0, 0)
 	if(timers['cool_down'] < 0 and is_in_group('enemies')):
 		global_position.x += 2 * lastdirection.x
@@ -191,7 +186,7 @@ func state_grapple():
 func state_clinched():
 	if(timers['stun_timer'] > 0):
 		knockdir = null
-		speed = 0
+		movedir = Vector2(0,0)
 		anim_switch('clinched')
 	else:
 		state_machine('idle')
@@ -285,6 +280,20 @@ func state_is_aerial():
 		if(state == s):
 			return true
 	return false
+
+func state_is_grapple():
+	var grapple_states = ['clinched','grapple','init_grab']
+	for s in grapple_states:
+		if(state == s):
+			return true
+	return false
+
+func state_is_vuln():
+	var vuln_states = ['stagger','crash','recover']
+	for s in vuln_states:
+		if(state == s):
+			return true
+	return false
 	
 func init_movement():
 	if(speed == 0):
@@ -297,7 +306,7 @@ func get_random_number(start, end):
 	
 func _on_HitBox_area_entered(area):
 	if(area.is_in_group('grapples')):
-		timers['stun_timer'] = 2
+		timers['stun_timer'] = 1.5
 		grab_sound.play()
 		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
 		state_machine('clinched')
@@ -319,3 +328,10 @@ func _on_HitBox_area_entered(area):
 				state_machine('stagger')
 	elif(area.is_in_group('power_ups')):
 		health += 25
+
+
+func _on_GrappleCol_area_entered(area):
+	timers['cool_down'] = 1
+	if(not area.is_in_group('flying')):
+		area.get_parent().get_parent().global_position = clinch_point.get_global_position()
+		state_machine('grapple')

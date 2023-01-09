@@ -61,6 +61,7 @@ collision_mask = 0
 ]]
 
 [node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 0.239216, 0.203922, 0.203922, 1 )
 
 [node name="Overlay" type="Sprite" parent="."]
 z_index = 2
@@ -74,3 +75,4 @@ stream = ExtResource( 3 )
 [node name="grab_sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 [connection signal="area_entered" from="Sprite/HitBox" to="." method="_on_HitBox_area_entered"]
+[connection signal="area_entered" from="Sprite/GrappleCol" to="." method="_on_GrappleCol_area_entered"]

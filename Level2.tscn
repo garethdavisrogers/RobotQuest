@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://cheyenne_level.png" type="Texture" id=1]
+[ext_resource path="res://cheyenne.png" type="Texture" id=1]
 [ext_resource path="res://Nix.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Health25.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sign1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sign2.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 500, 100 )
@@ -16,17 +18,41 @@ centered = false
 
 [node name="YSort" type="YSort" parent="Sprite"]
 
+[node name="PowerUp" parent="Sprite/YSort" instance=ExtResource( 3 )]
+position = Vector2( 643.345, 419.28 )
+z_index = 0
+
 [node name="Enemy" parent="Sprite/YSort" groups=[
 "entity",
 "flying",
 ] instance=ExtResource( 4 )]
-position = Vector2( 1210.59, 451.065 )
-
-[node name="PowerUp" parent="Sprite/YSort" instance=ExtResource( 3 )]
-position = Vector2( 395.455, 359.505 )
+position = Vector2( 1967.44, 420.083 )
 
 [node name="Enemy2" parent="Sprite/YSort" instance=ExtResource( 4 )]
-position = Vector2( 243.665, 419.423 )
+position = Vector2( 2642.58, 437.127 )
+
+[node name="Nix" parent="Sprite/YSort" groups=[
+"entities",
+] instance=ExtResource( 2 )]
+position = Vector2( 219.423, 314.519 )
+
+[node name="Sign" parent="Sprite/YSort" instance=ExtResource( 5 )]
+position = Vector2( 1043.75, 140.647 )
+
+[node name="Sign4" parent="Sprite/YSort" instance=ExtResource( 5 )]
+position = Vector2( 3867.79, 157.303 )
+
+[node name="Sign2" parent="Sprite/YSort" instance=ExtResource( 6 )]
+position = Vector2( 1443.48, 157.303 )
+
+[node name="Sign3" parent="Sprite/YSort" instance=ExtResource( 6 )]
+position = Vector2( 3471.76, 155.452 )
+
+[node name="Enemy3" parent="Sprite/YSort" instance=ExtResource( 4 )]
+position = Vector2( 3153.61, 367.041 )
+
+[node name="Enemy4" parent="Sprite/YSort" instance=ExtResource( 4 )]
+position = Vector2( 4722.96, 423.826 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite"]
 
@@ -45,5 +71,3 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Sprite/StaticBody2D"]
 position = Vector2( 4400, 70 )
 shape = SubResource( 1 )
-
-[node name="Nix" parent="." instance=ExtResource( 2 )]

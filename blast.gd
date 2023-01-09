@@ -18,6 +18,11 @@ func _physics_process(delta):
 func anim_switch(new_anim):
 	if(anim.current_animation != new_anim):
 		anim.play(new_anim)
+		
+func get_random_number(start, end):
+	var rand = RandomNumberGenerator.new()
+	rand.randomize()
+	return rand.randi_range(start, end)
 
 func _on_anim_animation_finished(anim_name):
 	if(anim_name == 'explode'):
@@ -25,4 +30,8 @@ func _on_anim_animation_finished(anim_name):
 	
 func _on_Detector_area_entered(area):
 	exploding = true
+	var num = get_random_number(1,2)
+	var sound_str = str('Explosion',num)
+	var sound = get_node(sound_str)
+	sound.play()
 	anim_switch('explode')

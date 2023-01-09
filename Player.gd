@@ -21,7 +21,9 @@ func _physics_process(delta):
 	if(health > 0):
 		if(timers['stun_timer']<0):
 			knockdir = null
-		movement_loop()
+		if(not state_is_grapple()):
+			movement_loop()
+			spritedir_loop()
 		match state:
 			'attack':
 				state_attack()
@@ -49,8 +51,9 @@ func _physics_process(delta):
 				state_grapple()
 			'flying_strike':
 				flying_strike()
+			'init_grab':
+				state_init_grab()
 				
-		spritedir_loop()
 		if(state != 'clinched' and state != 'stagger'):
 			controls_loop()
 	else:
@@ -65,11 +68,10 @@ func controls_loop():
 	movedir.x = -int(left) + int(right)
 	movedir.y = -int(up) + int(down)
 	
-	if(timers['cool_down'] < 0 and state != 'stagger' and state != 'crash'):
+	if(timers['cool_down'] < 0 and not state_is_vuln()):
 		##actions that can be taken when not stunned
-		if(Input.is_action_just_pressed('grab')):
-			state_machine('grapple')
-		elif(Input.is_action_just_pressed('lite_attack')):
+		
+		if(Input.is_action_just_pressed('lite_attack')):
 			if(can_attack_ground):
 				anim_switch(str('lite_attack', current_attack_index))
 				attack_input_pressed()
@@ -83,36 +85,44 @@ func controls_loop():
 				else:
 					anim_switch(str('heavy_attack', current_attack_index))
 				attack_input_pressed()
-			
-		elif(Input.is_action_just_pressed("blast")):
-			if(can_attack_ground):
-				anim_switch('blast')
-				blast()
-				attack_input_pressed()
-		elif(Input.is_action_pressed('defend')):
-			if(can_attack_ground):
-				anim_switch('block')
-				state_machine('defend')
-			
-		elif(Input.is_action_just_released('defend')):
-				state_machine('idle')
-			
-		elif(Input.is_action_just_pressed('jump')):
-			if(can_attack_ground):
-				timers['jump_timer'] = 0.6
-				anim_switch('jump')
-				state_machine('jump')
-			elif(state == 'fly'):
-				state_machine('land')
-			elif(timers['jump_timer'] < 0.4):
-				state_machine('takeoff')
+		if not state_is_grapple():
+			if(Input.is_action_just_pressed('grab')):
+				state_machine('init_grab')
+			if(Input.is_action_just_pressed("blast")):
+				if(can_attack_ground):
+					timers['cool_down'] = 2
+					anim_switch('blast')
+					blast()
+					attack_input_pressed()
+			elif(Input.is_action_pressed('defend')):
+				if(can_attack_ground):
+					anim_switch('block')
+					state_machine('defend')
+				
+			elif(Input.is_action_just_released('defend')):
+					state_machine('idle')
+				
+			elif(Input.is_action_just_pressed('jump')):
+				if(can_attack_ground):
+					timers['jump_timer'] = 0.6
+					anim_switch('jump')
+					state_machine('jump')
+				elif(state == 'fly'):
+					state_machine('land')
+				elif(timers['jump_timer'] < 0.4):
+					state_machine('takeoff')
 				
 func update_ui():
 	health_bar.value = health
+	
+func state_init_grab():
+	anim_switch('init_grab')
 				
 func _on_anim_animation_finished(anim_name):
 	if(anim_name == 'die'):
 		queue_free()
+	elif(anim_name == 'init_grab'):
+		state_machine('idle')
 	elif(anim_name == 'takeoff'):
 		state_machine('fly')
 	elif(anim_name == 'recover'):
@@ -125,7 +135,3 @@ func _on_anim_animation_finished(anim_name):
 func _on_PowerUpCol_area_entered(area):
 	if(area.is_in_group('quarter')):
 		health = min(health + 25, max_health)
-
-func _on_GrappleCol_area_entered(area):
-	state_machine('grapple')
-	area.get_parent().global_position = clinch_point.get_global_position()

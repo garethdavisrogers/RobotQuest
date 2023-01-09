@@ -2,7 +2,7 @@ extends "res://Fighter.gd"
 
 onready var detector = $Detector
 onready var charge_range_col = $Sprite/ChargeRangeCol
-onready var in_range_collider = $Sprite/InRangeCol
+onready var in_range_col = $Sprite/InRangeCol
 
 var target_position = null
 var target_direction = null
@@ -26,9 +26,10 @@ func _physics_process(delta):
 	clamp_movement()
 	##idle until player detected
 	if(health > 0):
-		init_movement()
-		movement_loop()
-		spritedir_loop()
+		if(not state_is_grapple()):
+			init_movement()
+			movement_loop()
+			spritedir_loop()
 		if(state != 'grapple' and state != 'clinched'):
 			if(player_detected):
 				get_player_info()
@@ -147,9 +148,3 @@ func _on_anim_animation_finished(anim_name):
 		queue_free()
 	if(anim_name=='pummel'):
 		state_machine('seek')
-
-func _on_GrappleCol_area_entered(area):
-	timers['cool_down'] = 1
-	timers['grapple_timer'] = 1
-	if(not area.is_in_group('flying')):
-		state_machine('grapple')
