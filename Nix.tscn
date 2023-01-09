@@ -3,8 +3,8 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://nix_spritesheet.png" type="Texture" id=2]
 
-[sub_resource type="CapsuleShape2D" id=1]
-height = 40.0
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 10, 30 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 15, 15 )
@@ -1807,7 +1807,7 @@ position = Vector2( 40, -10 )
 
 [node name="HitBoxCol" parent="Sprite/HitBox" index="0"]
 position = Vector2( -10, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 28 )
 
 [node name="HitCollider" parent="Sprite/HitCol" index="0"]
 position = Vector2( 40, -10 )
@@ -1828,10 +1828,8 @@ shape = SubResource( 3 )
 position = Vector2( 25, 0 )
 shape = SubResource( 4 )
 
-[node name="ClinchPoint" parent="Sprite" index="5" groups=[
-"players",
-]]
-position = Vector2( 50, -10 )
+[node name="clinch_point" parent="Sprite" index="5"]
+position = Vector2( 30, -15 )
 
 [node name="anim" parent="." index="2" groups=[
 "players",
@@ -1876,3 +1874,6 @@ visible = false
 texture = ExtResource( 2 )
 hframes = 42
 frame = 41
+
+[node name="Label" parent="HUD/VBox" index="0"]
+text = "NIx"

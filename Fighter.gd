@@ -7,7 +7,7 @@ onready var blast_spawn = $Sprite/blast_spawn
 onready var hitcol = $Sprite/HitCol
 onready var hitbox = $Sprite/HitBox
 onready var anim = $anim
-onready var clinch_point = $Sprite/ClinchPoint
+onready var clinch_point = $Sprite/clinch_point
 onready var shadow = $Shadow
 onready var hit1 = $Hit1
 onready var hit2 = $Hit2
@@ -163,9 +163,10 @@ func state_stagger():
 		state_machine('idle')
 
 func state_crash():
+	movedir = Vector2(0, 0)
 	anim_switch('crash')
 	if(get_shadow_diff() > default_shadow_diff):
-		sprite.position.y += 10
+		sprite.position.y += 8
 	else:
 		if(is_in_group('flying')):
 			remove_from_group('flying')
@@ -308,7 +309,7 @@ func _on_HitBox_area_entered(area):
 	if(area.is_in_group('grapples')):
 		timers['stun_timer'] = 1.5
 		grab_sound.play()
-		global_position = area.get_parent().get_node('ClinchPoint').get_global_position()
+		global_position = area.get_parent().get_node('clinch_point').get_global_position()
 		state_machine('clinched')
 	elif(area.is_in_group('attacks')):
 		knockdir = get_knockdir(area)

@@ -61,7 +61,7 @@ collision_mask = 2048
 position = Vector2( 15, 0 )
 disabled = true
 
-[node name="ClinchPoint" type="Position2D" parent="Sprite" index="5"]
+[node name="clinch_point" type="Position2D" parent="Sprite" index="5"]
 position = Vector2( 30, -10 )
 
 [node name="anim" type="AnimationPlayer" parent="." index="2"]
@@ -87,7 +87,6 @@ __meta__ = {
 [node name="Label" type="Label" parent="HUD/VBox" index="0"]
 margin_right = 202.0
 margin_bottom = 14.0
-text = "RobotQuest"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": true
